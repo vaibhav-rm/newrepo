@@ -1,0 +1,26 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Deploy
+        run: |
+          mkdir -p deploy
+          cp index.html deploy/
+          echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=index.html"></head></html>' > deploy/404.html
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.6
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: main 
+          FOLDER: deploy
