@@ -1,0 +1,27 @@
+name: Generate Files and Upload as Artifacts
+
+on:
+  push:
+    branches:
+      - main  
+      
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Generate Files
+        run: |
+          echo "This is file 1" > file1.txt
+          echo "This is file 2" > file2.txt
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifacts
+          path: |
+            file1.txt
+            file2.txt
