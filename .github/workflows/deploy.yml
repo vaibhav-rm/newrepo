@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  
+      - main  # Change this to your main branch name
 
 jobs:
   deploy:
@@ -18,9 +18,10 @@ jobs:
           mkdir -p deploy
           cp index.html deploy/
           echo '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=index.html"></head></html>' > deploy/404.html
+
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@4.1.6
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: main 
-          FOLDER: deploy
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          publish_dir: ./deploy
+          publish_branch: main  # Change this to your GitHub Pages branch
