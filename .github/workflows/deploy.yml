@@ -1,19 +1,32 @@
-name: Deploy to GitHub pages
+name: Deploy to GitHub Pages
+
 on:
   push:
-    branches: [ main ]
+    branches: [main]
+
 jobs:
+  # Build job (not provided for brevity since it's a static HTML file)
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-    - run: git config --global --add safe.directory /github/workspace
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Force push to destination branch
-      uses: ad-m/github-push-action@v0.5.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: gh-pages
-        force: true
-        directory: .
+  # Deploy job
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: .  # Path to the directory containing your static HTML file
