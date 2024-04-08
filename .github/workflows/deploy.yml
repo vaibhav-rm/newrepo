@@ -5,28 +5,32 @@ on:
     branches: [main]
 
 jobs:
-  # Build job (not provided for brevity since it's a static HTML file)
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-  # Deploy job
+      # Build your project here (if needed)
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: github-pages  # Specify the artifact name
+          path: .  # Specify the path to your generated files
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: github-pages  # Match the artifact name from the upload step
+
       - name: Deploy to GitHub Pages
-        id: deployment
         uses: actions/deploy-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: .  # Path to the directory containing your static HTML file
