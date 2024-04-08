@@ -14,7 +14,7 @@ jobs:
       # Build your project here (if needed)
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: github-pages  # Specify the artifact name
           path: .  # Specify the path to your generated files
