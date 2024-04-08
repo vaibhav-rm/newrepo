@@ -9,12 +9,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       # Build your project here (if needed)
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           branch: gh-pages
           name: github-pages  # Specify the artifact name
@@ -28,7 +28,7 @@ jobs:
       id-token: write
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: github-pages  # Match the artifact name from the upload ste
           run: chmod +x index.html
@@ -37,6 +37,4 @@ jobs:
         uses: actions/deploy-pages@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: gh-pages
-          folder: .  # Path to the directory containing your static HTML file
           artifact_name: github-pages  # Specify the artifact name to deploy
