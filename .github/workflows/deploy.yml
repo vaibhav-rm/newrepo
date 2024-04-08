@@ -14,7 +14,7 @@ jobs:
       # Build your project here (if needed)
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v2
         with:
           branch: gh-pages
           name: github-pages  # Specify the artifact name
@@ -28,7 +28,7 @@ jobs:
       id-token: write
     steps:
       - name: Download artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v2
         with:
           name: github-pages  # Match the artifact name from the upload step
 
