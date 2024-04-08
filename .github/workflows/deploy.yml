@@ -37,3 +37,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: .  # Path to the directory containing your static HTML file
+          artifact_name: github-pages  # Specify the artifact name to deploy
